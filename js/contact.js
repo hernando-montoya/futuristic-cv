@@ -5,6 +5,15 @@ const ContactForm = {
         const closeBtn = document.getElementById('close-modal');
         const form = document.getElementById('contact-form');
         const successMsg = document.getElementById('success-message');
+        const contactBtn = document.getElementById('contact-btn');
+
+        // Open modal when contact button is clicked
+        if (contactBtn) {
+            contactBtn.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        }
 
         // Open modal when email link is clicked
         document.addEventListener('click', (e) => {
