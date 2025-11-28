@@ -64,9 +64,9 @@ const PDFGenerator = {
         doc.setFont('helvetica', 'normal');
 
         const contactInfo = [
-            `📧 ${data.personalInfo.email}`,
-            `📱 ${data.personalInfo.phone}`,
-            `🌐 ${data.personalInfo.website}`
+            `Email: ${data.personalInfo.email}`,
+            `Phone: ${data.personalInfo.phone}`,
+            `Web: ${data.personalInfo.website}`
         ].join('  |  ');
 
         doc.text(contactInfo, margin, yPos);
