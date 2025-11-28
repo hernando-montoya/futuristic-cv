@@ -15,11 +15,23 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body class="bg-gray-900 text-white font-sans antialiased overflow-x-hidden">
-    <!-- Language Selector -->
-    <div class="fixed top-4 right-4 z-50">
+    <!-- Language Selector & PDF Button -->
+    <div class="fixed top-4 right-4 z-50 flex gap-3">
+        <button id="download-pdf-btn"
+            class="bg-purple-600/80 backdrop-blur border border-purple-500 text-white font-orbitron text-sm rounded px-4 py-1 focus:outline-none focus:shadow-[0_0_10px_#a855f7] cursor-pointer hover:bg-purple-500 transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                </path>
+            </svg>
+            PDF
+        </button>
         <select id="lang-selector"
             class="bg-gray-900/80 backdrop-blur border border-cyan-500 text-cyan-400 font-orbitron text-sm rounded px-3 py-1 focus:outline-none focus:shadow-[0_0_10px_#06b6d4] cursor-pointer appearance-none text-center uppercase tracking-widest hover:bg-gray-800 transition-colors">
             <option value="en">EN</option>
@@ -109,6 +121,7 @@
     <script src="js/renderer.js"></script>
     <script src="js/app.js"></script>
     <script src="js/contact.js"></script>
+    <script src="js/pdf-generator.js"></script>
 </body>
 
 </html>
