@@ -49,13 +49,18 @@
             <nav class="flex-1 overflow-y-auto p-4" id="sidebar-nav">
                 <!-- Navigation items will be injected here -->
             </nav>
-            <div class="p-4 border-t border-gray-700">
+            <div class="p-4 border-t border-gray-700 space-y-2">
                 <button id="export-btn"
-                    class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded transition duration-300 shadow-[0_0_10px_rgba(8,145,178,0.5)]">
+                    class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded transition duration-300">
                     EXPORT JSON
                 </button>
+                <button id="import-btn"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    IMPORT JSON
+                </button>
+                <input type="file" id="import-file" accept=".json" class="hidden">
                 <button id="reset-btn"
-                    class="w-full mt-2 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded transition duration-300 shadow-[0_0_10px_rgba(220,38,38,0.5)]">
+                    class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded transition duration-300">
                     RESET DATA
                 </button>
                 <a href="index.html" target="_blank"

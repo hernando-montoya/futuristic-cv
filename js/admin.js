@@ -64,6 +64,42 @@ async function initAdmin() {
         Storage.export();
     });
 
+    // Import button listener
+    document.getElementById('import-btn').addEventListener('click', () => {
+        document.getElementById('import-file').click();
+    });
+
+    // File input listener
+    document.getElementById('import-file').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        try {
+            const text = await file.text();
+            const importedData = JSON.parse(text);
+
+            // Validate imported data has required structure
+            if (!importedData.personalInfo || !importedData.experiences) {
+                throw new Error('Invalid CV data structure');
+            }
+
+            // Save imported data
+            await Storage.save(importedData);
+            currentData = importedData;
+
+            // Refresh UI
+            renderSidebar();
+            document.getElementById('editor-area').innerHTML = '<h2 class="text-xl text-gray-400 mb-4">Data imported successfully! Select a section to edit.</h2>';
+            showToast('Data imported successfully!');
+        } catch (error) {
+            console.error('Import error:', error);
+            alert('Error importing JSON: ' + error.message);
+        }
+
+        // Reset file input
+        e.target.value = '';
+    });
+
     // Reset button listener
     document.getElementById('reset-btn').addEventListener('click', async () => {
         if (confirm('Are you sure you want to reset all data to defaults? This cannot be undone.')) {
