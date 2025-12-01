@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Check if user has completed onboarding
+    const hasCompletedOnboarding = localStorage.getItem('onboarding_completed');
+    const hasData = localStorage.getItem('cv_data_v1');
+
+    if (!hasCompletedOnboarding && !hasData) {
+        // First time user - redirect to onboarding
+        window.location.href = 'onboarding.html';
+        return;
+    }
+
     const data = await Storage.load();
     const langSelector = document.getElementById('lang-selector');
 

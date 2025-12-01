@@ -1,22 +1,28 @@
-// Firebase Configuration
+// Firebase Configuration (OPTIONAL - leave empty to use localStorage only)
 const firebaseConfig = {
-    apiKey: "AIzaSyCp2jYIjxzVpOVi1Il7VgHeuMCM8Qje9gA",
-    authDomain: "futuristic-cv.firebaseapp.com",
-    projectId: "futuristic-cv",
-    storageBucket: "futuristic-cv.firebasestorage.app",
-    messagingSenderId: "517726295696",
-    appId: "1:517726295696:web:f2afd4a00ad5a30c706a15",
-    measurementId: "G-41SL9TWMZQ"
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
 };
 
-// Initialize Firebase
-let db;
-try {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    console.log("Firebase initialized successfully");
-} catch (e) {
-    console.error("Firebase initialization error:", e);
+// Initialize Firebase only if config is provided
+let db = null;
+const hasFirebaseConfig = firebaseConfig.apiKey && firebaseConfig.projectId;
+
+if (hasFirebaseConfig) {
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        console.log("Firebase initialized successfully");
+    } catch (e) {
+        console.warn("Firebase initialization failed, using localStorage only:", e);
+    }
+} else {
+    console.log("No Firebase config - using localStorage only mode");
 }
 
 const DEFAULT_DATA = {
@@ -88,42 +94,59 @@ const DEFAULT_DATA = {
 const Storage = {
     COLLECTION: 'cv_data',
     DOC_ID: 'main',
+    STORAGE_KEY: 'cv_data_v1',
 
     load: async () => {
-        try {
-            if (!db) throw new Error("Firebase not initialized");
-
-            console.log('Loading data from Firestore...');
-            const doc = await db.collection(Storage.COLLECTION).doc(Storage.DOC_ID).get();
-
-            if (doc.exists) {
-                console.log('Data loaded from Firestore');
-                return doc.data();
-            } else {
-                console.log('No data found in Firestore, creating default...');
-                await Storage.save(DEFAULT_DATA);
-                return DEFAULT_DATA;
+        // Try localStorage first
+        const localData = localStorage.getItem(Storage.STORAGE_KEY);
+        if (localData && localData !== "undefined" && localData !== "null") {
+            try {
+                console.log('Loaded data from localStorage');
+                return JSON.parse(localData);
+            } catch (e) {
+                console.error('Corrupted localStorage data:', e);
+                localStorage.removeItem(Storage.STORAGE_KEY);
             }
-        } catch (error) {
-            console.warn('Error loading from Firestore (using fallback):', error);
-            // Fallback to local storage or default if Firebase fails
-            const local = localStorage.getItem('cv_data_backup');
-            return local ? JSON.parse(local) : DEFAULT_DATA;
         }
+
+        // Try Firestore if configured
+        if (db) {
+            try {
+                console.log('Loading data from Firestore...');
+                const doc = await db.collection(Storage.COLLECTION).doc(Storage.DOC_ID).get();
+
+                if (doc.exists) {
+                    const data = doc.data();
+                    console.log('Data loaded from Firestore');
+                    localStorage.setItem(Storage.STORAGE_KEY, JSON.stringify(data));
+                    return data;
+                }
+            } catch (error) {
+                console.warn('Error loading from Firestore:', error);
+            }
+        }
+
+        // Fallback to default data
+        console.log('Using default data');
+        localStorage.setItem(Storage.STORAGE_KEY, JSON.stringify(DEFAULT_DATA));
+        return DEFAULT_DATA;
     },
 
     save: async (data) => {
         data.updated_at = new Date().toISOString();
-        try {
-            if (db) {
+
+        // Always save to localStorage
+        localStorage.setItem(Storage.STORAGE_KEY, JSON.stringify(data));
+        console.log('Data saved to localStorage');
+
+        // Also save to Firestore if configured
+        if (db) {
+            try {
                 await db.collection(Storage.COLLECTION).doc(Storage.DOC_ID).set(data);
-                console.log('Data saved to Firestore');
+                console.log('Data also saved to Firestore');
+            } catch (error) {
+                console.warn('Error saving to Firestore (data is safe in localStorage):', error);
             }
-            // Always backup to local storage
-            localStorage.setItem('cv_data_backup', JSON.stringify(data));
-        } catch (error) {
-            console.error('Error saving data:', error);
-            alert('Error saving to cloud. Check console.');
         }
     },
 
@@ -133,7 +156,7 @@ const Storage = {
     },
 
     export: () => {
-        const data = localStorage.getItem('cv_data_backup') || JSON.stringify(DEFAULT_DATA);
+        const data = localStorage.getItem(Storage.STORAGE_KEY) || JSON.stringify(DEFAULT_DATA);
         const blob = new Blob([data], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');

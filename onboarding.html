@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Futuristic CV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="bg-gray-900 text-white font-sans antialiased overflow-x-hidden">
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 w-full h-2 bg-gray-800 z-50">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-500"
+            style="width: 20%"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 max-w-4xl relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-12 mt-8">
+            <h1
+                class="text-5xl font-orbitron font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-4">
+                FUTURISTIC CV BUILDER
+            </h1>
+            <p class="text-gray-400 font-rajdhani text-lg">Create your stunning CV in 5 simple steps</p>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="flex justify-center mb-12">
+            <div class="flex items-center space-x-4">
+                <div class="step-indicator active" data-step="1">
+                    <span>1</span>
+                    <p>Personal</p>
+                </div>
+                <div class="w-12 h-0.5 bg-gray-700"></div>
+                <div class="step-indicator" data-step="2">
+                    <span>2</span>
+                    <p>Summary</p>
+                </div>
+                <div class="w-12 h-0.5 bg-gray-700"></div>
+                <div class="step-indicator" data-step="3">
+                    <span>3</span>
+                    <p>Experience</p>
+                </div>
+                <div class="w-12 h-0.5 bg-gray-700"></div>
+                <div class="step-indicator" data-step="4">
+                    <span>4</span>
+                    <p>Skills</p>
+                </div>
+                <div class="w-12 h-0.5 bg-gray-700"></div>
+                <div class="step-indicator" data-step="5">
+                    <span>5</span>
+                    <p>Review</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wizard Container -->
+        <div class="glass-panel p-8 rounded-xl">
+            <!-- Step 1: Personal Info -->
+            <div id="step-1" class="wizard-step active">
+                <h2 class="text-3xl font-orbitron text-cyan-400 mb-6">Personal Information</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Full Name *</label>
+                        <input type="text" id="name" required
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Professional Title *</label>
+                        <input type="text" id="title" required
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"
+                            placeholder="e.g., Senior Developer">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-400 mb-2">Email *</label>
+                            <input type="email" id="email" required
+                                class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-400 mb-2">Phone *</label>
+                            <input type="tel" id="phone" required
+                                class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Website</label>
+                        <input type="text" id="website"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"
+                            placeholder="yourwebsite.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Profile Image URL</label>
+                        <input type="url" id="profileImage"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"
+                            placeholder="https://...">
+                        <p class="text-xs text-gray-500 mt-1">Leave empty for default avatar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Professional Summary -->
+            <div id="step-2" class="wizard-step hidden">
+                <h2 class="text-3xl font-orbitron text-cyan-400 mb-6">Professional Summary</h2>
+                <p class="text-gray-400 mb-6">Write a brief summary about yourself in each language</p>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-cyan-400 mb-2">🇬🇧 English *</label>
+                        <textarea id="summary-en" rows="4" required
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-yellow-400 mb-2">🇪🇸 Spanish</label>
+                        <textarea id="summary-es" rows="4"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-yellow-500 focus:outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-blue-400 mb-2">🇫🇷 French</label>
+                        <textarea id="summary-fr" rows="4"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-blue-500 focus:outline-none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Experience (simplified for now) -->
+            <div id="step-3" class="wizard-step hidden">
+                <h2 class="text-3xl font-orbitron text-cyan-400 mb-6">Work Experience</h2>
+                <p class="text-gray-400 mb-6">You can add more experiences later in the admin panel</p>
+                <div id="experience-container" class="space-y-6">
+                    <!-- Experience entries will be added here -->
+                </div>
+                <button id="add-experience" class="mt-4 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded">
+                    + Add Experience
+                </button>
+            </div>
+
+            <!-- Step 4: Skills & Languages -->
+            <div id="step-4" class="wizard-step hidden">
+                <h2 class="text-3xl font-orbitron text-cyan-400 mb-6">Skills & Languages</h2>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Programming Languages</label>
+                        <input type="text" id="skills-languages"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"
+                            placeholder="JavaScript, Python, Java (comma separated)">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Frameworks & Tools</label>
+                        <input type="text" id="skills-tools"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"
+                            placeholder="React, Docker, Git (comma separated)">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-400 mb-2">Spoken Languages</label>
+                        <input type="text" id="spoken-languages"
+                            class="w-full bg-gray-900 text-white px-4 py-3 rounded border border-gray-600 focus:border-cyan-500 focus:outline-none"
+                            placeholder="English-Native, Spanish-Advanced (format: Language-Level)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Review -->
+            <div id="step-5" class="wizard-step hidden">
+                <h2 class="text-3xl font-orbitron text-cyan-400 mb-6">Review & Finish</h2>
+                <div id="review-content" class="space-y-4 text-gray-300">
+                    <!-- Review content will be populated here -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between mt-8 pt-6 border-t border-gray-700">
+                <button id="prev-btn"
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded font-orbitron transition-colors hidden">
+                    ← PREVIOUS
+                </button>
+                <div class="flex-1"></div>
+                <button id="next-btn"
+                    class="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded font-orbitron transition-colors">
+                    NEXT →
+                </button>
+                <button id="finish-btn"
+                    class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded font-orbitron transition-colors hidden">
+                    CREATE MY CV ✓
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div
+            class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+        </div>
+    </div>
+
+    <script src="js/onboarding.js"></script>
+</body>
+
+</html>
