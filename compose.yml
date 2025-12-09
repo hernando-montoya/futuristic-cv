@@ -5,29 +5,31 @@ services:
     image: nginx:alpine
     container_name: futuristic-cv
     restart: unless-stopped
-    
+
     ports:
       - "8001:8001"
-    
+
     volumes:
       # Monta todo el contenido del repositorio en el directorio web de nginx
       - ./:/usr/share/nginx/html:ro
-      # Configuración personalizada de nginx (opcional)
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    
+
     environment:
       - TZ=Europe/Madrid
-    
+
     labels:
       - "com.docker.compose.project=futuristic-cv"
       - "description=Futuristic CV Web Application"
-    
+
     networks:
       - cv-network
-    
-   healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
+
+networks:
+  cv-network:
+    driver: bridge
